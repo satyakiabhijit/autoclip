@@ -11,13 +11,13 @@ import fr from './locales/fr.json'
 import { resolveLanguage, readPreference, LANGUAGE_STORAGE_KEY, type LanguagePreference } from './language'
 
 export const languages = [
-  { value: 'zh', label: '简体中文' }, { value: 'en', label: 'English' },
+  { value: 'en', label: 'English' }, { value: 'zh', label: '简体中文' },
   { value: 'ja', label: '日本語' }, { value: 'ko', label: '한국어' },
   { value: 'es', label: 'Español' }, { value: 'pt', label: 'Português (Brasil)' },
   { value: 'ru', label: 'Русский' }, { value: 'fr', label: 'Français' },
 ] as const
 
-export const localeTags = { zh: 'zh-CN', en: 'en', ja: 'ja', ko: 'ko', es: 'es', pt: 'pt-BR', ru: 'ru', fr: 'fr' } as const
+export const localeTags = { en: 'en', zh: 'zh-CN', ja: 'ja', ko: 'ko', es: 'es', pt: 'pt-BR', ru: 'ru', fr: 'fr' } as const
 export { readPreference } from './language'
 
 let currentPreference: LanguagePreference = readPreference()
