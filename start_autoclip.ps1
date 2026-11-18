@@ -25,7 +25,7 @@ Get-NetTCPConnection -LocalPort 8000, 3000 -ErrorAction SilentlyContinue | ForEa
 
 # 1. Start backend
 Write-Host "[1/3] Starting backend server (http://127.0.0.1:8000)..." -ForegroundColor Yellow
-$BackendProc = Start-Process -FilePath ".\venv\Scripts\python.exe" -ArgumentList "-m uvicorn backend.main:app --host 127.0.0.1 --port 8000" -PassThru -WindowStyle Hidden
+$BackendProc = Start-Process -FilePath "$ScriptDir\venv\Scripts\python.exe" -ArgumentList "-m uvicorn backend.main:app --host 127.0.0.1 --port 8000 --no-access-log" -WorkingDirectory $ScriptDir -RedirectStandardOutput "$ScriptDir\logs\backend_out.log" -RedirectStandardError "$ScriptDir\logs\backend_err.log" -PassThru -WindowStyle Hidden
 $BackendProc.Id | Out-File -Encoding ascii "backend_win.pid"
 
 # Wait for backend
@@ -51,7 +51,7 @@ Write-Host "[OK] Backend started successfully!" -ForegroundColor Green
 
 # 2. Start frontend
 Write-Host "[2/3] Starting frontend interface (http://localhost:3000)..." -ForegroundColor Yellow
-$FrontendProc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c cd frontend && npm run dev -- --host 127.0.0.1 --port 3000" -PassThru -WindowStyle Hidden
+$FrontendProc = Start-Process -FilePath "cmd.exe" -ArgumentList "/c cd frontend && npm run dev -- --host 127.0.0.1 --port 3000" -WorkingDirectory $ScriptDir -RedirectStandardOutput "$ScriptDir\logs\frontend_out.log" -RedirectStandardError "$ScriptDir\logs\frontend_err.log" -PassThru -WindowStyle Hidden
 $FrontendProc.Id | Out-File -Encoding ascii "frontend_win.pid"
 
 # Wait for frontend
